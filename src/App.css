@@ -1,0 +1,10 @@
+.img-icon {
+  @apply w-5 h-5;
+}
+
+/* let's change the color and width of the scroll */
+
+--webkit-scrollbar-thumb {
+  background-color: #f00;
+  border-radius: 10px;
+}
