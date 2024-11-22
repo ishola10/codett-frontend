@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <footer className="flex fixed top-[90%] w-full justify-between items-center bg-[#1F1F1F] bg-opacity-70 p-2 md:px-8 py-3">
+    <footer className="flex text-white border-t border-gray-500 fixed top-[91%] w-full justify-between items-center bg-[#1F1F1F] bg-opacity-70 p-2 md:px-8 py-3">
       <div className="flex gap-7">
         <button onClick={() => {
             navigate("/dashboard");

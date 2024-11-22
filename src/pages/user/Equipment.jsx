@@ -6,25 +6,8 @@ const Equipment = () => {
   return (
     <div>
       <Header />
-      <div>
-        <h1>Equipment</h1>
-        <div>
-          <h2>Weapons</h2>
-          <div>
-            <p>Weapon 1</p>
-            <p>Weapon 2</p>
-            <p>Weapon 3</p>
-          </div>
-        </div>
-
-        <div>
-          <h2>Armor</h2>
-          <div>
-            <p>Armor 1</p>
-            <p>Armor 2</p>
-            <p>Armor 3</p>
-          </div>
-        </div>
+      <div className="flex justify-center items-center">
+        <h1 className="flex items-center justify-center mt-48 font-bold text-8xl">EQUIPMENTS</h1>
       </div>
       <Footer />
     </div>

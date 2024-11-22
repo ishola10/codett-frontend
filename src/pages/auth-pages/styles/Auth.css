@@ -18,7 +18,28 @@
   @apply border-b-2 border-blue-500;
 }
 
+.h1{
+  @apply text-white md:px-8 pt-4 text-3xl font-bold mt-14
+}
+
+.h{
+  -webkit-text-stroke: 1px blue;
+}
+
+.h2{
+  -webkit-text-stroke: 1px red;
+}
+
+.pri-btn{
+  @apply bg-[#2470FD] text-white p-2
+}
+
 .auth-page {
   background-size: cover;
   padding: 16px;
 }
+
+/* .dragged-overlay {
+  filter: blur(3px) brightness(0.5);
+  pointer-events: none;
+} */

@@ -28,27 +28,23 @@ const Battlespace = () => {
     {
       name: "BORNO STATE",
       image: "/images/battle-bg.png",
-      coordinates: { lat: 11.5500, lng: 13.1000 },
     },
     {
       name: "LAGOS STATE",
       image: "/images/battle-bg2.png",
-      coordinates: { lat: 6.5244, lng: 3.3792 },
     },
     {
       name: "ORJI TOWN CENTER",
       image: "/images/battle-bg3.png",
-      coordinates: { lat: 5.1081, lng: 7.2975 }, 
     },
   ];
 
-  const handleLocationClick = (coordinates) => {
-    navigate("/map", { state: { coordinates } });
+  const handleLocationClick = () => {
+    navigate("/setup-simulation");
   };
 
   const handleRandomClick = () => {
-    const nigeriaCoordinates = { lat: 9.082, lng: 8.6753 };
-    navigate("/map", { state: { coordinates: nigeriaCoordinates } });
+    navigate("/setup-simulation");
   };
 
   return (
@@ -118,7 +114,7 @@ const Battlespace = () => {
                   >
                     <div className="bg-black bg-opacity-40 flex items-center justify-center">
                       <button
-                        onClick={() => handleLocationClick(location.coordinates)}
+                        onClick={handleLocationClick}
                         className="mt-[8.3rem] text-left px-2 py-1 text-white text-sm bg-blue-900 w-full"
                       >
                         {location.name}

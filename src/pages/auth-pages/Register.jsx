@@ -1,7 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => (
-  <div className="bg-dark-overlay p-6 gap-2 flex flex-col rounded-lg w-full max-w-md">
+const Register = () => {
+  
+  const navigate = useNavigate();
+  return (
+    <div className="bg-dark-overlay p-6 gap-2 flex flex-col rounded-lg w-full max-w-md">
     <label htmlFor="username" className="label">
       Username*
       <input id="username" type="text" placeholder="Username" className="input-field" />
@@ -24,8 +28,9 @@ const Register = () => (
       I agree to the processing of my personal data in accordance with the Privacy Policy
       </label>
     </div>
-    <button className="btn-primary mt-2">REGISTER</button>
+    <button onClick={() => navigate("/login")} className="btn-primary mt-2">REGISTER</button>
   </div>
-);
+  );
+};
 
 export default Register;

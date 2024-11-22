@@ -6,8 +6,8 @@ const Missions = () => {
   return (
     <div>
       <Header />
-      <div>
-        <h1>Missions</h1>
+      <div className="flex justify-center items-center">
+        <h1 className="flex items-center justify-center mt-48 font-bold text-8xl">MISSIONS</h1>
       </div>
       <Footer />
     </div>
