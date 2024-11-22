@@ -123,8 +123,8 @@ const Preview = () => {
 
   const ModalObjective = () => {
     const [typedText, setTypedText] = useState("");
-    const fullText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt, nunc nec ultricies bibendum, justo odio tincidunt leo, sed ultricies turpis nisl nec felis. In hac habitasse platea dictumst. Integer nec turpis nec nisl aliquet lacinia. Donec ultricies tincidunt mauris, nec ultricies sapien. Donec ultricies tincidunt mauris, nec ultricies sapien.`;
-  
+    const fullText = `Team CODETT is tasked with conducting a high-priority search and rescue operation in Borno State, Nigeria, following [specific incident, e.g., natural disaster, armed conflict, or missing persons report]. The mission aims to locate, assist, and evacuate affected individuals while ensuring the safety of all team members and civilians encountered during the operation.`;
+
     useEffect(() => {
       let index = 0;
       const interval = setInterval(() => {
@@ -135,10 +135,10 @@ const Preview = () => {
           clearInterval(interval);
         }
       }, 50);
-  
+
       return () => clearInterval(interval);
     }, [fullText]);
-  
+
     return (
       <div className="fixed inset-0 max-w-96 ml-[35%] flex justify-center items-center z-50">
         <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -159,11 +159,13 @@ const Preview = () => {
       </div>
     );
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col font-roboto-condensed bg-[#18191C] relative">
       {isModalVisible && <ModalObjective />}
-      {isModalVisible && <div className="fixed inset-0 bg-black opacity-70 z-40"></div>}
+      {isModalVisible && (
+        <div className="fixed inset-0 bg-black opacity-70 z-40"></div>
+      )}
 
       <div
         className={`w-full fixed px-8 py-4 flex justify-between items-center border-b border-gray-500 bg-opacity-90 backdrop-blur ${
@@ -212,10 +214,7 @@ const Preview = () => {
             <h1 className="text-white text-2xl">FRIENDLY FORCES</h1>
             <div className="flex gap-2 flex-wrap p-2 bg-gradient-to-b from-[#1D1D1D] to-[#36383A]">
               {blueIcons.map((icon, index) => (
-                <div
-                  key={index}
-                  className="relative group cursor-pointer"
-                >
+                <div key={index} className="relative group cursor-pointer">
                   <img
                     src={icon.icon}
                     alt={icon.name}
@@ -247,12 +246,15 @@ const Preview = () => {
                 top: icon.position.y,
                 left: icon.position.x,
               }}
-
-              
             />
           ))}
 
-          <button className="pri-btn mt-80" onClick={() => navigate("/play-simulation")}>START SIMULATION</button>
+          <button
+            className="pri-btn mt-80"
+            onClick={() => navigate("/play-simulation")}
+          >
+            START SIMULATION
+          </button>
         </div>
 
         <div className="flex flex-col gap-5 w-[25%]">
@@ -260,10 +262,7 @@ const Preview = () => {
             <h1 className="text-white text-2xl">ENEMY FORCES</h1>
             <div className="flex gap-2 flex-wrap p-2 bg-gradient-to-b from-[#1D1D1D] to-[#36383A]">
               {redIcons.map((icon, index) => (
-                <div
-                  key={index}
-                  className="relative group cursor-pointer"
-                >
+                <div key={index} className="relative group cursor-pointer">
                   <img
                     src={icon.icon}
                     alt={icon.name}
