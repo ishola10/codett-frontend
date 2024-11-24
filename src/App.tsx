@@ -14,7 +14,6 @@ import Equipment from './pages/user/Equipment';
 import Profile from './pages/auth-pages/profile/Profile';
 import Settings from './pages/user/Settings';
 import MapComponent from './components/map/MapComponent';
-import DragAndDropSimulation from './components/Drag';
 import FriendPreview from './pages/user/preview/FriendPreview';
 import EnemyPreview from './pages/user/preview/EnemyPreview';
 import Preview from './pages/user/preview/Preview';
@@ -39,7 +38,6 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/map" element={<MapComponent />} />
-          <Route path="/drag" element={<DragAndDropSimulation />} />
           <Route path="/friend-preview" element={<FriendPreview />} />
           <Route path="/enemy-preview" element={<EnemyPreview />} />
           <Route path="/preview" element={<Preview />} />
