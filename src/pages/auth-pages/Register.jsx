@@ -34,7 +34,7 @@ const Register = () => {
     try {
       await axios.post(API_ROUTES.REGISTER, { username, email, password, name });
       setSuccess("Registration successful! Redirecting...");
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/auth/login"), 2000);
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");
     }
