@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Preview = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [droppedIcons, setDroppedIcons] = useState([]);
+  const [droppedIcons] = useState([]);
   const navigate = useNavigate();
 
   const blueIcons = [

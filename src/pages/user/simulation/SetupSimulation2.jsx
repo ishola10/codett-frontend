@@ -47,9 +47,6 @@ const SetupSimulationEnemy = () => {
     setVisibleMission(visibleMission === section ? null : section);
   };
 
-  const handleSimulationClick = (section) => {
-    setActiveSimultion(activeSimultion === section ? null : section);
-  };
 
   const handleSimulationVisibility = (section) => {
     setVisibleSimultion(visibleSimultion === section ? null : section);
