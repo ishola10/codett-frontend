@@ -9,7 +9,7 @@ const SetupSimulationEnemy = () => {
   const [visibleSection, setVisibleSection] = useState(null);
   const [activeMission, setActiveMission] = useState(null);
   const [visibleMission, setVisibleMission] = useState(null);
-  const [activeSimultion, setActiveSimultion] = useState(null);
+  const [activeSimulation] = useState(null);
   const [visibleSimultion, setVisibleSimultion] = useState(null);
   const [activeResources, setActiveResources] = useState(null);
   const [visibleResources, setVisibleResources] = useState(null);
@@ -597,7 +597,7 @@ const SetupSimulationEnemy = () => {
             </div>
           )}
 
-          {activeSimultion && (
+          {activeSimulation && (
             <div className="w-[50%] -mt-4 h-full mr-5 text-white p-4 flex flex-col gap-2">
               <section className="p-2 bg-black cursor-pointer">
                 <div onClick={() => handleSimulationVisibility("DIFFICULTY")}>
