@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../../components/Footer";
 import "../../auth-pages/styles/Auth.css";
+import { goals, strategies, resources, infantryUnits, vehicles, assets, navalForces, supplyResources } from "./simulationData";
 
 const SetupSimulation = () => {
   const navigate = useNavigate();
@@ -63,138 +64,23 @@ const SetupSimulation = () => {
     setVisibleResources(visibleResources === section ? null : section);
   };
 
-  const goals = [
-    "Reconnaissance",
-    "Escort",
-    "Capture Point/Zone",
-    "Destroy Targets",
-    "Defense",
-    "Search and Rescue",
-    "Custom Objectives",
-  ];
-
-  const strategies = ["Aggressive", "Balanced", "Defensive"];
-
-  const resources = ["Low", "Medium", "Abundant"];
-
-  const infantryUnits = [
-    "Rifleman",
-    "Anti-Tank Specialist",
-    "Medic",
-    "Machine Gunner",
-    "Sniper",
-    "Scout/Recon",
-    "Engineer",
-    "Radio Operator",
-    "Grenadier",
-    "Special Forces",
-  ];
-
-  const vehicles = [
-    "Main Battle Tank",
-    "Attack Helicopter",
-    "Armored Carrier",
-    "Recovery Vehicle",
-    "Reconnaissance Vehicle",
-    "Transport Truck",
-  ];
-
-  const assets = [
-    "Artillery Gun",
-    "Mobile Command Post",
-    "SAM System",
-    "Repair Station",
-    "Radar Station",
-    "Surveillance Drone",
-    "Ammo Depot",
-    "Field Hospital",
-  ];
-
-  const navalForces = [
-    "Patrol Boat",
-    "Frigate",
-    "Destroyer",
-    "Corvette",
-    "Submarine",
-    "Supply Ship",
-  ];
-
-  const supplyResources = [
-    "Ammo",
-    "Fuel",
-    "Medical Supplies",
-    "Food",
-    "Water",
-    "Repair Parts",
-  ];
-
-  const toggleGoal = (goal) => {
-    if (selectedGoals.includes(goal)) {
-      setSelectedGoals(selectedGoals.filter((g) => g !== goal));
-    } else {
-      setSelectedGoals([...selectedGoals, goal]);
-    }
+  const toogleData = (data, setData) => (item) => {
+    setData((prev) =>
+      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+    );
   };
 
-  const toogleStrategy = (strategy) => {
-    if (selectedStrategy.includes(strategy)) {
-      setSelectedStrategy(selectedStrategy.filter((s) => s !== strategy));
-    } else {
-      setSelectedStrategy([...selectedStrategy, strategy]);
-    }
-  };
+  const toggleGoal = toogleData(selectedGoals, setSelectedGoals);
+  const toogleStrategy = toogleData(selectedStrategy, setSelectedStrategy);
+  const toogleResources = toogleData(selectedPopulation, setSelectedPopulation);
+  const toogleInfantryUnits = toogleData(selectedInfantryUnits, setSelectedInfantryUnits);
+  const toogleVehicles = toogleData(selectedVehicles, setSelectedVehicles);
+  const toogleAssets = toogleData(selectedAssets, setSelectedAssets);
+  const toogleNavalForces = toogleData(selectedNavalForces, setSelectedNavalForces);
+  const toogleSupplyResources = toogleData(selectedSupplyResources, setSelectedSupplyResources);
 
-  const toogleResources = (resource) => {
-    if (selectedPopulation.includes(resource)) {
-      setSelectedPopulation(selectedPopulation.filter((r) => r !== resource));
-    } else {
-      setSelectedPopulation([...selectedPopulation, resource]);
-    }
-  };
 
-  const toogleInfantryUnits = (unit) => {
-    if (selectedInfantryUnits.includes(unit)) {
-      setSelectedInfantryUnits(selectedInfantryUnits.filter((u) => u !== unit));
-    } else {
-      setSelectedInfantryUnits([...selectedInfantryUnits, unit]);
-    }
-  };
 
-  const toogleVehicles = (vehicle) => {
-    if (selectedVehicles.includes(vehicle)) {
-      setSelectedVehicles(selectedVehicles.filter((v) => v !== vehicle));
-    } else {
-      setSelectedVehicles([...selectedVehicles, vehicle]);
-    }
-  };
-
-  const toogleAssets = (asset) => {
-    if (selectedAssets.includes(asset)) {
-      setSelectedAssets(selectedAssets.filter((a) => a !== asset));
-    } else {
-      setSelectedAssets([...selectedAssets, asset]);
-    }
-  };
-
-  const toogleNavalForces = (navalForce) => {
-    if (selectedNavalForces.includes(navalForce)) {
-      setSelectedNavalForces(
-        selectedNavalForces.filter((n) => n !== navalForce)
-      );
-    } else {
-      setSelectedNavalForces([...selectedNavalForces, navalForce]);
-    }
-  };
-
-  const toogleSupplyResources = (resource) => {
-    if (selectedSupplyResources.includes(resource)) {
-      setSelectedSupplyResources(
-        selectedSupplyResources.filter((r) => r !== resource)
-      );
-    } else {
-      setSelectedSupplyResources([...selectedSupplyResources, resource]);
-    }
-  };
 
   const [duration, setDuration] = useState(20);
 
