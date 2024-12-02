@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
 
   const navItems = [
     { label: "DASHBOARD", path: "/dashboard" },
@@ -11,6 +12,11 @@ const Header = () => {
     { label: "EQUIPMENT", path: "/equipment" },
     { label: "MISSIONS", path: "/missions" },
   ];
+  
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUsername(user?.username || "Guest");
+  }, []);
 
   const goToProfile = () => {
     navigate("/profile");
@@ -28,7 +34,7 @@ const Header = () => {
             key={label}
             onClick={() => navigate(path)}
             className={`py-1 px-2 ${
-              location.pathname === path  
+              location.pathname === path
                 ? "bg-white text-black"
                 : "text-white hover:bg-white hover:text-black"
             }`}
@@ -37,13 +43,13 @@ const Header = () => {
           </button>
         ))}
       </nav>
-      <div className="text-xs  md:text-sm ">
+      <div className="text-xs md:text-sm">
         3500 XP{" "}
         <span
           onClick={goToProfile}
           className="px-2 ml-2 py-1 border-l-2 border-yellow-500 cursor-pointer bg-black bg-opacity-65"
         >
-          USER2345
+          {username}
         </span>
       </div>
     </header>

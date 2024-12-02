@@ -32,9 +32,20 @@ const Register = () => {
     }
 
     try {
-      await axios.post(API_ROUTES.REGISTER, { username, email, password, name });
+      const response = await axios.post(API_ROUTES.REGISTER, {
+        username,
+        email,
+        password,
+        name,
+      });
+      
+      const { token, user } = response.data;
+
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
       setSuccess("Registration successful! Redirecting...");
-      setTimeout(() => navigate("/auth/login"), 2000);
+      setTimeout(() => navigate("/dashboard"), 2000);
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");
     }
