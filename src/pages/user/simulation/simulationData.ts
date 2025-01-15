@@ -10,7 +10,7 @@ const goals = [
 
 const strategies = ["Aggressive", "Balanced", "Defensive"];
 
-const resources = ["Low", "Medium", "Abundant"];
+const resources = ["Low", "Medium", "High"];
 
 const infantryUnits = [
   "Rifleman",

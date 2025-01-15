@@ -13,10 +13,18 @@ import Missions from './pages/user/Missions';
 import Equipment from './pages/user/Equipment';
 import Profile from './pages/auth-pages/profile/Profile';
 import Settings from './pages/user/Settings';
-// import MapComponent from './components/map/MapComponent';
+import MapComponent from './components/map/MapComponent';
+import ControlMap from './components/map/ControlMap';
 import FriendPreview from './pages/user/preview/FriendPreview';
 import EnemyPreview from './pages/user/preview/EnemyPreview';
 import Preview from './pages/user/preview/Preview';
+
+import EnvironmentSettings from './components/setup-simulation-component/EnvironmentSettings';
+import MissionSettings from './components/setup-simulation-component/MissionSettings';
+import SimulationSettings from './components/setup-simulation-component/SimulationSettings';
+import ResourceManagementSettings from './components/setup-simulation-component/ResourceManagementSettings';
+import MissionForm from './components/MissionForm';
+import GetMission from './components/GetMission';
 
 
 const App: React.FC = () => {
@@ -37,10 +45,18 @@ const App: React.FC = () => {
           <Route path="/equipment" element={<Equipment />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
-          {/* <Route path="/map" element={<MapComponent />} /> */}
+          <Route path="/map" element={<MapComponent />} />
+          <Route path="/control-map" element={<ControlMap center={{ lat: 0, lng: 0 }} teams={[]} />} />
           <Route path="/friend-preview" element={<FriendPreview />} />
           <Route path="/enemy-preview" element={<EnemyPreview />} />
           <Route path="/preview" element={<Preview />} />
+
+          <Route path="/environment-settings" element={<EnvironmentSettings />} />
+          <Route path="/mission-settings" element={<MissionSettings />} />
+          <Route path="/simulation-settings" element={<SimulationSettings />} />
+          <Route path="/resource-management-settings" element={<ResourceManagementSettings />} />
+          <Route path="/mission-form" element={<MissionForm />} />
+          <Route path="/get-mission" element={<GetMission />} />
         </Routes>
       </div>
     </Router>
