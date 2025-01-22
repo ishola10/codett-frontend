@@ -68,3 +68,8 @@ export const getMissions = async () => {
   const response = await axios.get(`${BASE_URL}/mission`);
   return response.data;
 };
+
+export const getMission = async (id: any) => {
+  const response = await axios.get(`${BASE_URL}/mission/${id}`);
+  return response.data;
+};
