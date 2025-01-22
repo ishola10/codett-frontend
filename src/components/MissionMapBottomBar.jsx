@@ -36,7 +36,7 @@ const MissionMapBottomBar = (props) => {
         <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMapTypeChange} label="Sattelite" icon={<LocationOnIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} label="Mission" icon={<LocationOnIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} label="Objectives" icon={<MilitaryTechIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} label="Command" icon={<LocalPoliceIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleToggleCommandPanel} label="Command" icon={<LocalPoliceIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} label="Modifiers" icon={<FunctionsIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} label="Status" icon={<CachedIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} label="Shutdown" icon={<PowerSettingsNewIcon />} />

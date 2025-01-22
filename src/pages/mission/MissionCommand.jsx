@@ -23,13 +23,18 @@ const MissionCommand = () => {
   const [mission, setMission] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [markers, setMarkers] = useState([]);
+  const [infowindowOpen, setInfowindowOpen] = useState(false);
+  const [info, setInfo] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search); 
   const missionId = queryParams.get('mission_id');
 
+  const [markerRef, marker] = useAdvancedMarkerRef();
   const [mapType, setMapType] = useState('terrain'); 
+
+  const [toggleCommand, setToggleCommand] = useState(false);
 
   const handleMapTypeChange = () => {
     setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
@@ -45,39 +50,43 @@ const MissionCommand = () => {
     if (response && response.data !== null) {
       setIsLoading(false);
       setMission(response.data);
-
-      // set marker states
-      let objectiveMarker = {
-        lng: parseFloat(response.data.objectives[0].longitude),
-        lat: parseFloat(response.data.objectives[0].latitude),
-        icon: `http://localhost:8000/icons/${response.data.objectives[0].symbol.icon}`,
-        title: response.data.objectives[0].description
-      }
-
-      // let friendlyMarker = {
-      //   lng: parseFloat(response.data.participants[0].team.longitude),
-      //   lat: parseFloat(response.data.participants[0].team.latitude)
-      // }
-
-      // let hostileMarker = {
-      //   lng: parseFloat(response.data.participants[1].team.longitude),
-      //   lat: parseFloat(response.data.participants[1].team.latitude)
-      // }
-
-      // console.log(`http://localhost:8000/icons/${response.data.objectives[0].symbol.icon}`);
-
-      handleAddMarker(objectiveMarker);
-
+      setMarkers([
+        {
+          lng: parseFloat(response.data.objectives[0].longitude),
+          lat: parseFloat(response.data.objectives[0].latitude),
+          icon: `http://localhost:8000/icons/${response.data.objectives[0].symbol.icon}`,
+          title: response.data.objectives[0].symbol.description,
+          description: response.data.objectives[0].description
+        },
+        {
+          lng: parseFloat(response.data.participants[0].longitude),
+          lat: parseFloat(response.data.participants[0].latitude),
+          icon: `http://localhost:8000/icons/${response.data.participants[0].team.symbol.icon}`,
+          title: response.data.participants[0].team.symbol.title,
+          description: response.data.participants[0].team.symbol.description
+        },
+        {
+          lng: parseFloat(response.data.participants[1].longitude),
+          lat: parseFloat(response.data.participants[1].latitude),
+          icon: `http://localhost:8000/icons/${response.data.participants[1].team.symbol.icon}`,
+          title: response.data.participants[1].team.symbol.title,
+          description: response.data.participants[1].team.symbol.description
+        }
+      ]);
     } else {
       setMission(null);
       setIsLoading(false);
     }
   }
 
-  const handleAddMarker = (marker) => {
-    // Add the new marker to the existing markers array
-    setMarkers([...markers, marker]); 
-  };
+  const handleViewMarkerInfo = (marker) => {
+    setInfo(marker);
+    setInfowindowOpen(true);
+  }
+
+  const handleCloseMarkerInfo = (marker) => {
+    setInfowindowOpen((prevInfowindowOpen) => false);
+  }
 
   useEffect(() => {
     getMissionById(missionId);
@@ -86,7 +95,7 @@ const MissionCommand = () => {
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>
       <FullPageLoader isLoading={isLoading} />
-      <MissionMapSideBar mission={mission} />
+      <MissionMapSideBar {...mission} />
       <MissionMapBottomBar handleMapTypeChange={handleMapTypeChange} />
       {
         mission !== null ?
@@ -108,13 +117,33 @@ const MissionCommand = () => {
               disableDefaultUI={true}>
 
               {markers.map((marker, index) => (
-                <AdvancedMarker title={marker.title} key={index} position={{
-                  lat: marker.lat,
-                  lng: marker.lng
-                }}>
-                  <img src={marker.icon} width={32} height={32} />
+                <AdvancedMarker 
+                  key={index}
+                  onClick={() => handleViewMarkerInfo(marker)}
+                  title={marker.title} 
+                  ref={markerRef} 
+                  position={{
+                    lat: marker.lat,
+                    lng: marker.lng
+                  }}>
+                  <img src={marker.icon} width={64} height={64} />
                 </AdvancedMarker>
               ))}
+
+
+              {info && (
+                <InfoWindow
+                  position={{
+                    lat: info.lat,
+                    lng: info.lng
+                  }}
+                  maxWidth={120}
+                  onCloseClick={() => handleCloseMarkerInfo(marker)}>
+                  
+                    <Typography sx={{ fontSize: '12px' }}>{info.description}</Typography>
+                  
+                  </InfoWindow>
+              )}
             </Map>
           </APIProvider>
         : <Typography varaint="body2">
