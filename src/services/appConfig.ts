@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const APP_ENV = process.env.APP_ENV;
+// const APP_ENV = process.env.APP_ENV;
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const API_ROUTES = {
