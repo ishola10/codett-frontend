@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// const APP_ENV = process.env.APP_ENV;
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const API_ROUTES = {
@@ -56,7 +57,7 @@ export const getEquipments = async () => {
 export const getEquipmentById = async (id: string) => {
   const response = await axios.get(`${BASE_URL}/equipments/${id}`);
   return response.data;
-};  
+};
 
 export const createMission = async (data: any) => {
   const response = await axios.post(`${BASE_URL}/missions`, data);
@@ -65,5 +66,10 @@ export const createMission = async (data: any) => {
 
 export const getMissions = async () => {
   const response = await axios.get(`${BASE_URL}/mission`);
+  return response.data;
+};
+
+export const getMission = async (id: any) => {
+  const response = await axios.get(`${BASE_URL}/mission/${id}`);
   return response.data;
 };

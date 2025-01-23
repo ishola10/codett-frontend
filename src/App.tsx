@@ -25,6 +25,8 @@ import SimulationSettings from './components/setup-simulation-component/Simulati
 import ResourceManagementSettings from './components/setup-simulation-component/ResourceManagementSettings';
 import MissionForm from './components/MissionForm';
 import GetMission from './components/GetMission';
+import MissionCommand from './pages/mission/MissionCommand';
+import MissionMap from './pages/mission/MissionMap';
 
 
 const App: React.FC = () => {
@@ -32,7 +34,7 @@ const App: React.FC = () => {
     <Router>
       <div className="min-h-screen">
         <Routes>
-          <Route path="/" element={<Welcome />} />  
+          <Route path="/" element={<Welcome />} />
           <Route path="/loading" element={<LoadingScreen />} />
           <Route path="/auth" element={<AuthWrapper />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -57,6 +59,8 @@ const App: React.FC = () => {
           <Route path="/resource-management-settings" element={<ResourceManagementSettings />} />
           <Route path="/mission-form" element={<MissionForm />} />
           <Route path="/get-mission" element={<GetMission />} />
+          <Route path="/mission-command" element={<MissionCommand />} />
+          <Route path="/mission-map" element={<MissionMap />} />
         </Routes>
       </div>
     </Router>
