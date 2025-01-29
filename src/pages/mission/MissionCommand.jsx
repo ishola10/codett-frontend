@@ -36,10 +36,6 @@ const MissionCommand = () => {
 
   const [toggleCommand, setToggleCommand] = useState(false);
 
-  const handleMapTypeChange = () => {
-    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
-  };
-
   const mapContainerStyle: React.CSSProperties = {
     width: "100%",
     height: "100vh",
@@ -88,6 +84,34 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
+  const handleMapTypeChange = () => {
+    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
+  }
+
+  const handleMissionDisplay = () => {
+    // Todo
+  }
+
+  const handleMissionObjective = () => {
+    // Todo
+  }
+
+  const handleToggleCommandPanel = () => {
+    // Todo
+  }
+
+  const handleModifier = () => {
+    // Todo
+  }
+
+  const handleMissionStatus = () => {
+    // Todo
+  }
+
+  const handleMissionShutdown = () => {
+    // Todo
+  }
+
   useEffect(() => {
     getMissionById(missionId);
   }, []);
@@ -96,7 +120,15 @@ const MissionCommand = () => {
     <div sx={{ py: 0, backgroundColor: "#000" }}>
       <FullPageLoader isLoading={isLoading} />
       <MissionMapSideBar {...mission} />
-      <MissionMapBottomBar handleMapTypeChange={handleMapTypeChange} />
+      <MissionMapBottomBar 
+        handleMapTypeChange={handleMapTypeChange} 
+        handleMissionDisplay={handleMissionDisplay}
+        handleMissionObjective={handleMissionObjective}
+        handleToggleCommandPanel={handleToggleCommandPanel}
+        handleModifier={handleModifier}
+        handleMissionStatus={handleMissionStatus}
+        handleMissionShutdown={handleMissionShutdown}
+      />
       {
         mission !== null ?
           <APIProvider apiKey={'AIzaSyCvCuQI3Se4e4r2q4SbEEHEr-OgOMDrRQw'}>
