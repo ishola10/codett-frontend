@@ -6,128 +6,128 @@ import EnvironmentSettings from "../../../components/setup-simulation-component/
 import MissionSettings from "../../../components/setup-simulation-component/MissionSettings";
 import SimulationSettings from "../../../components/setup-simulation-component/SimulationSettings";
 import ResourceManagementSettings from "../../../components/setup-simulation-component/ResourceManagementSettings";
-import {
-  goals,
-  strategies,
-  resources,
-  infantryUnits,
-  vehicles,
-  assets,
-  navalForces,
-  supplyResources,
-} from "./simulationData";
+// import {
+//   goals,
+//   strategies,
+//   resources,
+//   infantryUnits,
+//   vehicles,
+//   assets,
+//   navalForces,
+//   supplyResources,
+// } from "./simulationData";
 
 const SetupSimulation = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState(null);
+  // const [activeSection, setActiveSection] = useState(null);
   const [visibleSection, setVisibleSection] = useState(null);
-  const [activeMission, setActiveMission] = useState(null);
-  const [visibleMission, setVisibleMission] = useState(null);
-  const [activeSimultion, setActiveSimultion] = useState(null);
-  const [visibleSimultion, setVisibleSimultion] = useState(null);
-  const [activeResources, setActiveResources] = useState(null);
-  const [visibleResources, setVisibleResources] = useState(null);
-  const [selectedWeather, setSelectedWeather] = useState("Cloudy");
-  const [selectedTimeOfDay, setSelectedTimeOfDay] = useState("Morning");
-  const [selectedPopulation, setSelectedPopulation] = useState(
-    "Define terrain population"
-  );
-  const [selectedMode, setSelectedMode] = useState("No");
-  const [selectedGoals, setSelectedGoals] = useState([]);
-  const [selectedStrategy, setSelectedStrategy] = useState(
-    "Define terrain population"
-  );
+  // const [activeMission, setActiveMission] = useState(null);
+  // const [visibleMission, setVisibleMission] = useState(null);
+  // const [activeSimultion, setActiveSimultion] = useState(null);
+  // const [visibleSimultion, setVisibleSimultion] = useState(null);
+  // const [activeResources, setActiveResources] = useState(null);
+  // const [visibleResources, setVisibleResources] = useState(null);
+  // const [selectedWeather, setSelectedWeather] = useState("Cloudy");
+  // const [selectedTimeOfDay, setSelectedTimeOfDay] = useState("Morning");
+  // const [selectedPopulation, setSelectedPopulation] = useState(
+  //   "Define terrain population"
+  // );
+  // const [selectedMode, setSelectedMode] = useState("No");
+  // const [selectedGoals, setSelectedGoals] = useState([]);
+  // const [selectedStrategy, setSelectedStrategy] = useState(
+  //   "Define terrain population"
+  // );
 
-  const [selectedDifficulty, setSelectedDifficulty] = useState("Easy");
-  const [selectedInfantryUnits, setSelectedInfantryUnits] = useState([]);
-  const [selectedVehicles, setSelectedVehicles] = useState([]);
-  const [selectedAssets, setSelectedAssets] = useState([]);
-  const [selectedNavalForces, setSelectedNavalForces] = useState([]);
-  const [selectedSupplyResources, setSelectedSupplyResources] = useState([]);
+  // const [selectedDifficulty, setSelectedDifficulty] = useState("Easy");
+  // const [selectedInfantryUnits, setSelectedInfantryUnits] = useState([]);
+  // const [selectedVehicles, setSelectedVehicles] = useState([]);
+  // const [selectedAssets, setSelectedAssets] = useState([]);
+  // const [selectedNavalForces, setSelectedNavalForces] = useState([]);
+  // const [selectedSupplyResources, setSelectedSupplyResources] = useState([]);
 
-  const toggleSection = (section) => {
-    setActiveSection(activeSection === section ? null : section);
-  };
+  // const toggleSection = (section) => {
+  //   setActiveSection(activeSection === section ? null : section);
+  // };
 
-  const toggleVisibility = (section) => {
-    setVisibleSection(visibleSection === section ? null : section);
-  };
+  // const toggleVisibility = (section) => {
+  //   setVisibleSection(visibleSection === section ? null : section);
+  // };
 
-  const handleMissionClick = (section) => {
-    setActiveMission(activeMission === section ? null : section);
-  };
+  // const handleMissionClick = (section) => {
+  //   setActiveMission(activeMission === section ? null : section);
+  // };
 
-  const handleMissionVisibility = (section) => {
-    setVisibleMission(visibleMission === section ? null : section);
-  };
+  // const handleMissionVisibility = (section) => {
+  //   setVisibleMission(visibleMission === section ? null : section);
+  // };
 
-  const handleSimulationClick = (section) => {
-    setActiveSimultion(activeSimultion === section ? null : section);
-  };
+  // const handleSimulationClick = (section) => {
+  //   setActiveSimultion(activeSimultion === section ? null : section);
+  // };
 
-  const handleSimulationVisibility = (section) => {
-    setVisibleSimultion(visibleSimultion === section ? null : section);
-  };
+  // const handleSimulationVisibility = (section) => {
+  //   setVisibleSimultion(visibleSimultion === section ? null : section);
+  // };
 
-  const handleResourcesClick = (section) => {
-    setActiveResources(activeResources === section ? null : section);
-  };
+  // const handleResourcesClick = (section) => {
+  //   setActiveResources(activeResources === section ? null : section);
+  // };
 
-  const handleResourcesVisibility = (section) => {
-    setVisibleResources(visibleResources === section ? null : section);
-  };
+  // const handleResourcesVisibility = (section) => {
+  //   setVisibleResources(visibleResources === section ? null : section);
+  // };
 
-  const toogleData = (data, setData) => (item) => {
-    setData((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
-    );
-  };
+  // const toogleData = (data, setData) => (item) => {
+  //   setData((prev) =>
+  //     prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  //   );
+  // };
 
-  const toggleGoal = toogleData(selectedGoals, setSelectedGoals);
-  const toogleStrategy = toogleData(selectedStrategy, setSelectedStrategy);
-  const toogleResources = toogleData(selectedPopulation, setSelectedPopulation);
-  const toogleInfantryUnits = toogleData(
-    selectedInfantryUnits,
-    setSelectedInfantryUnits
-  );
-  const toogleVehicles = toogleData(selectedVehicles, setSelectedVehicles);
-  const toogleAssets = toogleData(selectedAssets, setSelectedAssets);
-  const toogleNavalForces = toogleData(
-    selectedNavalForces,
-    setSelectedNavalForces
-  );
-  const toogleSupplyResources = toogleData(
-    selectedSupplyResources,
-    setSelectedSupplyResources
-  );
+  // const toggleGoal = toogleData(selectedGoals, setSelectedGoals);
+  // const toogleStrategy = toogleData(selectedStrategy, setSelectedStrategy);
+  // const toogleResources = toogleData(selectedPopulation, setSelectedPopulation);
+  // const toogleInfantryUnits = toogleData(
+  //   selectedInfantryUnits,
+  //   setSelectedInfantryUnits
+  // );
+  // const toogleVehicles = toogleData(selectedVehicles, setSelectedVehicles);
+  // const toogleAssets = toogleData(selectedAssets, setSelectedAssets);
+  // const toogleNavalForces = toogleData(
+  //   selectedNavalForces,
+  //   setSelectedNavalForces
+  // );
+  // const toogleSupplyResources = toogleData(
+  //   selectedSupplyResources,
+  //   setSelectedSupplyResources
+  // );
 
 
-  const [duration, setDuration] = useState(20);
+  // const [duration, setDuration] = useState(20);
 
-  const durationCounter = (duration) => {
-    const increment = () => {
-      setDuration(duration + 1);
-    };
+  // const durationCounter = (duration) => {
+  //   const increment = () => {
+  //     setDuration(duration + 1);
+  //   };
 
-    const decrement = () => {
-      setDuration(duration - 1);
-    };
+  //   const decrement = () => {
+  //     setDuration(duration - 1);
+  //   };
 
-    return (
-      <div className="flex items-center justify-left px-2 w-1/2 bg-[#1D1D1D] gap-2 rounded-lg mt-2">
-        <button onClick={increment} className="text-xl">
-          +
-        </button>
-        <p className="text-[10px]">
-          <strong className="text-2xl">{duration}</strong> m
-        </p>
+  //   return (
+  //     <div className="flex items-center justify-left px-2 w-1/2 bg-[#1D1D1D] gap-2 rounded-lg mt-2">
+  //       <button onClick={increment} className="text-xl">
+  //         +
+  //       </button>
+  //       <p className="text-[10px]">
+  //         <strong className="text-2xl">{duration}</strong> m
+  //       </p>
 
-        <button onClick={decrement} className="text-xl">
-          -
-        </button>
-      </div>
-    );
-  };
+  //       <button onClick={decrement} className="text-xl">
+  //         -
+  //       </button>
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="min-h-screen flex flex-col font-roboto-condensed bg-[#18191C]">
