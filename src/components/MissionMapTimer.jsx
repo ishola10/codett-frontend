@@ -4,14 +4,16 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const MissionMapTimer = ({ duration }) => {
-  const [timeLeft, setTimeLeft] = React.useState(duration);
+const [timeLeft, setTimeLeft] = React.useState(duration * 60);
+
 
   React.useEffect(() => {
     if (timeLeft <= 0) return; 
 
-    console.log(`Current Duration: ${formatTime(timeLeft)}`);
+    // console.log(`Current Duration: ${formatTime(timeLeft)}`);
 
     const timerId = setInterval(() => {
       setTimeLeft((prevTime) => prevTime - 1); 
@@ -20,11 +22,12 @@ const MissionMapTimer = ({ duration }) => {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds, duration) => {
     const minutes = Math.floor(seconds / 60);
+    const durationInSeconds = duration * 60;
     const remainingSeconds = seconds % 60;
-
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`; 
+  
+    return `${minutes}:${remainingSeconds < durationInSeconds ? "0" : ""}${remainingSeconds}`; 
   };
 
   return (
@@ -33,24 +36,17 @@ const MissionMapTimer = ({ duration }) => {
         position: 'fixed', 
         top: 0, 
         left: 0, 
-        width: '300px', 
-        height: '22vh', 
+        width: '120px', 
+        height: '16vh', 
         zIndex: 1,
         marginLeft: '5px',
         marginTop: '10px',
-        paddingBottom: '30px'
+        // paddingBottom: '30px'
       }}
     >
-      <Card sx={{ height: '100%', borderRadius: '25px', backgroundColor: 'rgba(0, 0, 0, 0.85)', color: '#FFF' }}>
-        <CardContent>
-          <Typography variant="p" component="div">
-            Mission Timer
-          </Typography>
-          <hr />
-          <Box sx={{ marginTop: '10px' }}>
-            <Card 
+      <Card 
               sx={{ 
-                height: 30, 
+                height: 50, 
                 border: '1px solid #ccc', 
                 borderRadius: '12px',
                 backgroundColor: 'rgba(0, 0, 0, 0.85)', 
@@ -58,18 +54,16 @@ const MissionMapTimer = ({ duration }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                
+                paddingTop: '10px'
               }} 
             >
-              <CardContent>
-                <Typography variant="h5" sx={{ fontSize: '16px', paddingTop: '5px', textAlign: 'left' }}>
-                  {timeLeft > 0 ? formatTime(timeLeft) : "Time's up!"}
+              <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AccessTimeIcon sx={{ fontSize: '20px', color: '#FFF' }} />
+                <Typography variant="h5" sx={{ fontSize: '16px', textAlign: 'left' }}>
+                  {timeLeft > 0 ? formatTime(timeLeft, duration) : "Time's up!"}
                 </Typography>
               </CardContent>
             </Card>
-          </Box>
-        </CardContent>
-      </Card>
     </Box>
   );
 };
