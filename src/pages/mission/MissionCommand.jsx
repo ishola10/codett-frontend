@@ -28,6 +28,7 @@ const MissionCommand = () => {
 
   // const [toggleCommand, setToggleCommand] = useState(false);
 
+
   const handleMapTypeChange = () => {
     setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
   };
@@ -36,6 +37,7 @@ const MissionCommand = () => {
   //   width: "100%",
   //   height: "100vh",
   // };
+
 
   const getMissionById = async (missionId) => {
     const response = await getMission(missionId);
@@ -82,6 +84,34 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
+  const handleMapTypeChange = () => {
+    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
+  }
+
+  const handleMissionDisplay = () => {
+    // Todo
+  }
+
+  const handleMissionObjective = () => {
+    // Todo
+  }
+
+  const handleToggleCommandPanel = () => {
+    // Todo
+  }
+
+  const handleModifier = () => {
+    // Todo
+  }
+
+  const handleMissionStatus = () => {
+    // Todo
+  }
+
+  const handleMissionShutdown = () => {
+    // Todo
+  }
+
   useEffect(() => {
     getMissionById(missionId);
   }, []);
@@ -91,7 +121,15 @@ const MissionCommand = () => {
       <FullPageLoader isLoading={isLoading} />
       {mission && <MissionMapTimer duration={mission.duration} />}
       <MissionMapSideBar {...mission} />
-      <MissionMapBottomBar handleMapTypeChange={handleMapTypeChange} />
+      <MissionMapBottomBar 
+        handleMapTypeChange={handleMapTypeChange} 
+        handleMissionDisplay={handleMissionDisplay}
+        handleMissionObjective={handleMissionObjective}
+        handleToggleCommandPanel={handleToggleCommandPanel}
+        handleModifier={handleModifier}
+        handleMissionStatus={handleMissionStatus}
+        handleMissionShutdown={handleMissionShutdown}
+      />
       {
         mission !== null ?
           <APIProvider apiKey={'AIzaSyCvCuQI3Se4e4r2q4SbEEHEr-OgOMDrRQw'}>
