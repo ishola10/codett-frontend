@@ -2,11 +2,17 @@ import axios from "axios";
 
 // const APP_ENV = process.env.APP_ENV;
 const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+// const ASSETS_URL = process.env.ASSET_URL;
 
 export const API_ROUTES = {
   LOGIN: `${BASE_URL}/auth/login`,
   REGISTER: `${BASE_URL}/auth/register`,
 };
+
+export const getIcons = async () => {
+  const response = await axios.get(`${BASE_URL}/symbol`);
+  return response.data;
+}
 
 export const getWeapons = async () => {
   const response = await axios.get(`${BASE_URL}/weapons`);
@@ -73,3 +79,4 @@ export const getMission = async (id: any) => {
   const response = await axios.get(`${BASE_URL}/mission/${id}`);
   return response.data;
 };
+
