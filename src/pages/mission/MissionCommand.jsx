@@ -81,10 +81,6 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
-  const handleMapTypeChange = () => {
-    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
-  }
-
   useEffect(() => {
     getMissionById(missionId);
   }, []);
