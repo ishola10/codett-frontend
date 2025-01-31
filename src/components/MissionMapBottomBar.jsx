@@ -33,12 +33,12 @@ const MissionMapBottomBar = (props) => {
         }}
       >
         <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMapTypeChange} label="Sattelite" icon={<LocationOnIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMissionDisplay} label="Mission" icon={<LocationOnIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMissionObjective} label="Objectives" icon={<MilitaryTechIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleToggleCommandPanel} label="Command" icon={<LocalPoliceIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleModifier} label="Modifiers" icon={<FunctionsIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMissionStatus} label="Status" icon={<CachedIcon />} />
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMissionShutdown} label="Shutdown" icon={<PowerSettingsNewIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(1)} label="Mission" icon={<LocationOnIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(2)} label="Objectives" icon={<MilitaryTechIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(3)} label="Command" icon={<LocalPoliceIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(4)} label="Modifiers" icon={<FunctionsIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(5)} label="Status" icon={<CachedIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(6)} label="Shutdown" icon={<PowerSettingsNewIcon />} />
       </BottomNavigation>
     </Box>
   );

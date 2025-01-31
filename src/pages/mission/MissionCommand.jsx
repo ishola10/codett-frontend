@@ -12,6 +12,8 @@ import { Link } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import MissionMapSideBar from "../../components/MissionMapSideBar";
+import MissionCommandSideBar from "../../components/MissionCommandSideBar";
+import MissionObjectiveSideBar from "../../components/MissionObjectiveSideBar";
 import MissionMapBottomBar from "../../components/MissionMapBottomBar";
 import { getMission } from "../../services/appConfig";
 import { useSearchParams } from 'react-router-dom';
@@ -35,6 +37,7 @@ const MissionCommand = () => {
   const [mapType, setMapType] = useState('terrain'); 
 
   const [toggleCommand, setToggleCommand] = useState(false);
+  const [displaySidebar, setDisplaySidebar] = useState(3);
 
   const mapContainerStyle: React.CSSProperties = {
     width: "100%",
@@ -88,30 +91,6 @@ const MissionCommand = () => {
     setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
   }
 
-  const handleMissionDisplay = () => {
-    // Todo
-  }
-
-  const handleMissionObjective = () => {
-    // Todo
-  }
-
-  const handleToggleCommandPanel = () => {
-    // Todo
-  }
-
-  const handleModifier = () => {
-    // Todo
-  }
-
-  const handleMissionStatus = () => {
-    // Todo
-  }
-
-  const handleMissionShutdown = () => {
-    // Todo
-  }
-
   useEffect(() => {
     getMissionById(missionId);
   }, []);
@@ -119,15 +98,14 @@ const MissionCommand = () => {
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>
       <FullPageLoader isLoading={isLoading} />
-      <MissionMapSideBar {...mission} />
+      {displaySidebar === 1 && <MissionMapSideBar {...mission} />}
+      {displaySidebar === 2 && <MissionObjectiveSideBar {...mission} />}
+      {displaySidebar === 3 && <MissionCommandSideBar {...mission} />}
+      
+
       <MissionMapBottomBar 
         handleMapTypeChange={handleMapTypeChange} 
-        handleMissionDisplay={handleMissionDisplay}
-        handleMissionObjective={handleMissionObjective}
-        handleToggleCommandPanel={handleToggleCommandPanel}
-        handleModifier={handleModifier}
-        handleMissionStatus={handleMissionStatus}
-        handleMissionShutdown={handleMissionShutdown}
+        handleSideBarDisplay={setDisplaySidebar}
       />
       {
         mission !== null ?
