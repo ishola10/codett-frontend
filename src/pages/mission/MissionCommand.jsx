@@ -84,9 +84,9 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
-  const handleMapTypeChange = () => {
-    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
-  }
+  // const handleMapTypeChange = () => {
+  //   setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
+  // }
 
   const handleMissionDisplay = () => {
     // Todo
