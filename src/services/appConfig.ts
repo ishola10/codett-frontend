@@ -80,3 +80,13 @@ export const getMission = async (id: any) => {
   return response.data;
 };
 
+export const updateMissionParticipant = async (id: any, query: any) => {
+  const response = await axios.post(`${BASE_URL}/mission/add-participants?mission_id=${id}`, query);
+  return response.data;
+};
+
+export const updateMissionParticipantPosition = async (id: any, query: any) => {
+  const response = await axios.post(`${BASE_URL}/mission/update-participants?mission_id=${id}`, query);
+  return response.data;
+};
+

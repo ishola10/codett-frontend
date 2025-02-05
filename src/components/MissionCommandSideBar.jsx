@@ -41,6 +41,12 @@ const MissionCommandSideBar = ({...props}) => {
     fetchIcons();
   }, []);
 
+  const onDragStart = (e) => {
+    // console.log(e.target.src);
+    e.dataTransfer.setData("iconUrl", e.target.src);
+    e.dataTransfer.setData("iconId", e.target.id);
+  }
+
   return (
     <Box 
       sx={{ 
@@ -50,7 +56,7 @@ const MissionCommandSideBar = ({...props}) => {
         width: '300px', 
         height: '100vh', 
         zIndex: 1,
-        marginRight: '5px',
+        marginRight: '25px',
         marginTop: '10px',
         paddingBottom: '30px'
       }}
@@ -108,11 +114,14 @@ const MissionCommandSideBar = ({...props}) => {
             {icons && icons.map((icon, index) => (
               <Grid item xs={12} sm={6} md={6} key={index}>
                 <Card sx={{ background: 'transparent'}}>
-                  <CardMedia
-                    component="img"
-                    height="32"
-                    image={`https://api.codett.ng/icons/${icon.icon}`}
+                  <img
+                    id={icon.id}
+                    src={`http://localhost:8000/icons/${icon.icon}`}
                     alt={icon.title}
+                    width={92}
+                    height={92}
+                    draggable
+                    onDragStart={onDragStart}
                   />
                   <CardContent>
                     <Typography gutterBottom sx={{ fontSize: '10px', color: '#FFF'}}>{icon.title}</Typography>

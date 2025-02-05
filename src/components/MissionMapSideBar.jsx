@@ -142,7 +142,7 @@ const RightSidebar = ({ ...props }) => {
               <Typography variant="body2">Mission Logs</Typography>
 
               <Typography sx={{ fontSize: "12px" }}>
-                No mission logs found!
+                Not available at the moments
               </Typography>
             </CardContent>
           </Card>
