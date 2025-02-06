@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getConditions,
   getWeatherConditions,
@@ -6,8 +7,23 @@ import {
   getEquipments,
   getWeapons,
 } from "../services/appConfig";
+import {
+  TextField,
+  Checkbox,
+  Button,
+  Grid,
+  Typography,
+  Paper,
+  FormControlLabel,
+  List,
+  ListItem,
+  ListItemText,
+  TextareaAutosize,
+  Box,
+} from "@mui/material";
 
 const MissionForm: React.FC = () => {
+  const Navigate = useNavigate();
   const [weatherConditions, setWeatherConditions] = useState<
     { id: number; name: string; description: string }[]
   >([]);
@@ -180,6 +196,7 @@ const MissionForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    Navigate("/get-mission");
     console.log(formData);
   };
 
@@ -227,355 +244,317 @@ const MissionForm: React.FC = () => {
   ) => formData.participants[teamIndex][type].includes(id);
 
   return (
-    <form onSubmit={handleSubmit} className="font-sans">
+    <form onSubmit={handleSubmit}>
       {currentStep === 1 && (
-        <div className="bg-black text-white p-6">
-          <h1 className="text-2xl font-bold mb-4">Mission Details</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 w-[50%] gap-6">
-            <label className="block">
-              <span className="text-gray-300">Mission Name:</span>
-              <input
-                type="text"
+        <Paper elevation={3} sx={{ p: 4, bgcolor: "background.paper" }}>
+          <Typography variant="h4" gutterBottom>
+            Mission Details
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Mission Name"
                 value={formData.name}
                 onChange={(e) => handleInputChange(e, "name")}
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block">
-              <span className="text-gray-300">Objective Description:</span>
-              <input
-                type="text"
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Objective Description"
                 value={formData.objectives[0].description}
                 onChange={(e) =>
                   handleInputChange(e, "objectives.0.description")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-
-            <label className="block">
-              <span className="text-gray-300">Longitude:</span>
-              <input
-                type="text"
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Longitude"
                 value={formData.objectives[0].coordinate.lng}
                 onChange={(e) =>
                   handleInputChange(e, "objectives.0.coordinate.lng")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-
-            <label className="block">
-              <span className="text-gray-300">Latitude:</span>
-              <input
-                type="text"
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Latitude"
                 value={formData.objectives[0].coordinate.lat}
                 onChange={(e) =>
                   handleInputChange(e, "objectives.0.coordinate.lat")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-
-            <label className="block">
-              <span className="text-gray-300">Duration (minutes):</span>
-              <input
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Duration (minutes)"
                 type="number"
                 value={formData.duration}
                 onChange={(e) => handleInputChange(e, "duration")}
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Weather:</span>
-              <ul className="grid grid-cols-3 gap-4 mt-2">
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Weather</Typography>
+              <List sx={{display
+              : "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 2
+              }}>
                 {weatherConditions.map((weather) => (
-                  <li
+                  <ListItem
                     key={weather.id}
-                    className={`px-4 py-2 rounded ${
-                      formData.weather_id === weather.id
-                        ? "bg-blue-500"
-                        : "bg-gray-600"
-                    } hover:bg-gray-500 cursor-pointer`}
+                    button
+                    selected={formData.weather_id === weather.id}
                     onClick={() => handleSelection("weather_id", weather.id)}
                   >
-                    {weather.name}
-                  </li>
+                    <ListItemText primary={weather.name} />
+                  </ListItem>
                 ))}
-              </ul>
-            </label>
-
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Condition:</span>
-              <ul className="grid grid-cols-2 gap-4 mt-2">
+              </List>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Condition</Typography>
+              <List sx={{display
+              : "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 2
+              }}>
                 {conditions.map((condition) => (
-                  <li
+                  <ListItem
                     key={condition.id}
-                    className={`px-4 py-2 rounded ${
-                      formData.condition_id === condition.id
-                        ? "bg-blue-500"
-                        : "bg-gray-600"
-                    } hover:bg-gray-500 cursor-pointer`}
+                    button
+                    selected={formData.condition_id === condition.id}
                     onClick={() =>
                       handleSelection("condition_id", condition.id)
                     }
                   >
-                    {condition.name}
-                  </li>
+                    <ListItemText primary={condition.name} />
+                  </ListItem>
                 ))}
-              </ul>
-            </label>
-
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Region:</span>
-              <ul className="grid grid-cols-2 gap-4 mt-2">
+              </List>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Region</Typography>
+              <List sx={{display
+              : "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 2
+              }}>
                 {regions.map((region) => (
-                  <li
+                  <ListItem
                     key={region.id}
-                    className={`px-4 py-2 rounded ${
-                      formData.region_id === region.id
-                        ? "bg-blue-500"
-                        : "bg-gray-600"
-                    } hover:bg-gray-500 cursor-pointer`}
+                    button
+                    selected={formData.region_id === region.id}
                     onClick={() => handleSelection("region_id", region.id)}
                   >
-                    {region.state}
-                  </li>
+                    <ListItemText primary={region.state} />
+                  </ListItem>
                 ))}
-              </ul>
-            </label>
-
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={formData.is_active}
-                onChange={(e) => handleInputChange(e, "is_active")}
-                className="mr-2"
+              </List>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.is_active}
+                    onChange={(e) => handleInputChange(e, "is_active")}
+                  />
+                }
+                label="Is Active"
               />
-              <span className="text-gray-300">Is Active</span>
-            </label>
-            <label className="block col-span-full">
-              <span className="text-gray-300">Rules:</span>
-              <textarea
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Rules"
+                multiline
+                rows={4}
                 value={formData.rules}
                 onChange={(e) => handleInputChange(e, "rules")}
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-          </div>
-          <div className="mt-6">
-            <button
-              type="button"
-              onClick={handleNext}
-              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" onClick={handleNext}>
+                Next
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       )}
 
       {currentStep === 2 && (
-        <div className="bg-gray-800 text-white p-6 shadow-md">
-          <h1 className="text-2xl font-bold mb-4">Team 1 Details</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 w-[50%] gap-6">
-            <label className="block">
-              <span className="text-gray-300">Team Name:</span>
-              <input
-                type="text"
+        <Paper elevation={3} sx={{ p: 4, bgcolor: "background.paper" }}>
+          <Typography variant="h4" gutterBottom>
+            Team 1 Details
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Team Name"
                 value={formData.participants[0].name}
                 onChange={(e) => handleInputChange(e, "participants.0.name")}
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block">
-              <span className="text-gray-300">Longitude:</span>
-              <input
-                type="text"
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Longitude"
                 value={formData.participants[0].coordinate.lng}
                 onChange={(e) =>
                   handleInputChange(e, "participants.0.coordinate.lng")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block">
-              <span className="text-gray-300">Latitude:</span>
-              <input
-                type="text"
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Latitude"
                 value={formData.participants[0].coordinate.lat}
                 onChange={(e) =>
                   handleInputChange(e, "participants.0.coordinate.lat")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Weapons:</span>
-              <ul className="grid grid-cols-4 gap-4 mt-2">
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Weapons</Typography>
+              <Grid container spacing={2}>
                 {weapons.map((weapon) => (
-                  <li
-                    key={weapon.id}
-                    className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
-                  >
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={isChecked(0, "weapon_ids", weapon.id)}
-                        onChange={() =>
-                          handleCheckboxChange(0, "weapon_ids", weapon.id)
-                        }
-                      />
-                      {weapon.name}
-                    </label>
-                  </li>
+                  <Grid item key={weapon.id} xs={12} sm={6} md={3}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isChecked(0, "weapon_ids", weapon.id)}
+                          onChange={() =>
+                            handleCheckboxChange(0, "weapon_ids", weapon.id)
+                          }
+                        />
+                      }
+                      label={weapon.name}
+                    />
+                  </Grid>
                 ))}
-              </ul>
-            </label>
-
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Equipments:</span>
-              <ul className="grid grid-cols-4 gap-4 mt-2">
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Equipments</Typography>
+              <Grid container spacing={2}>
                 {equipments.map((equipment) => (
-                  <li
-                    key={equipment.id}
-                    className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
-                  >
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={isChecked(0, "equipment_ids", equipment.id)}
-                        onChange={() =>
-                          handleCheckboxChange(0, "equipment_ids", equipment.id)
-                        }
-                      />
-                      {equipment.name}
-                    </label>
-                  </li>
+                  <Grid item key={equipment.id} xs={12} sm={6} md={3}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isChecked(0, "equipment_ids", equipment.id)}
+                          onChange={() =>
+                            handleCheckboxChange(0, "equipment_ids", equipment.id)
+                          }
+                        />
+                      }
+                      label={equipment.name}
+                    />
+                  </Grid>
                 ))}
-              </ul>
-            </label>
-          </div>
-          <div className="mt-6 w-[50%] flex justify-between">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Box display="flex" justifyContent="space-between">
+                <Button variant="contained" onClick={handlePrev}>
+                  Previous
+                </Button>
+                <Button variant="contained" onClick={handleNext}>
+                  Next
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Paper>
       )}
 
       {currentStep === 3 && (
-        <div className="bg-gray-800 text-white p-6 shadow-md">
-          <h1 className="text-2xl font-bold mb-4">Team 2 Details</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 w-[50%] gap-6">
-            <label className="block">
-              <span className="text-gray-300">Team Name:</span>
-              <input
-                type="text"
-                value={formData.participants[0].name}
-                onChange={(e) => handleInputChange(e, "participants.0.name")}
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
+        <Paper elevation={3} sx={{ p: 4, bgcolor: "background.paper" }}>
+          <Typography variant="h4" gutterBottom>
+            Team 2 Details
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Team Name"
+                value={formData.participants[1].name}
+                onChange={(e) => handleInputChange(e, "participants.1.name")}
               />
-            </label>
-            <label className="block">
-              <span className="text-gray-300">Longitude:</span>
-              <input
-                type="text"
-                value={formData.participants[0].coordinate.lng}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Longitude"
+                value={formData.participants[1].coordinate.lng}
                 onChange={(e) =>
-                  handleInputChange(e, "participants.0.coordinate.lng")
+                  handleInputChange(e, "participants.1.coordinate.lng")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block">
-              <span className="text-gray-300">Latitude:</span>
-              <input
-                type="text"
-                value={formData.participants[0].coordinate.lat}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Latitude"
+                value={formData.participants[1].coordinate.lat}
                 onChange={(e) =>
-                  handleInputChange(e, "participants.0.coordinate.lat")
+                  handleInputChange(e, "participants.1.coordinate.lat")
                 }
-                className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded"
               />
-            </label>
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Weapons:</span>
-              <ul className="grid grid-cols-4 gap-4 mt-2">
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Weapons</Typography>
+              <Grid container spacing={2}>
                 {weapons.map((weapon) => (
-                  <li
-                    key={weapon.id}
-                    className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
-                  >
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={isChecked(1, "weapon_ids", weapon.id)}
-                        onChange={() =>
-                          handleCheckboxChange(1, "weapon_ids", weapon.id)
-                        }
-                      />
-                      {weapon.name}
-                    </label>
-                  </li>
+                  <Grid item key={weapon.id} xs={12} sm={6} md={3}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isChecked(1, "weapon_ids", weapon.id)}
+                          onChange={() =>
+                            handleCheckboxChange(1, "weapon_ids", weapon.id)
+                          }
+                        />
+                      }
+                      label={weapon.name}
+                    />
+                  </Grid>
                 ))}
-              </ul>
-            </label>
-
-            <label className="block col-span-full">
-              <span className="text-gray-300">Select Equipments:</span>
-              <ul className="grid grid-cols-4 gap-4 mt-2">
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6">Select Equipments</Typography>
+              <Grid container spacing={2}>
                 {equipments.map((equipment) => (
-                  <li
-                    key={equipment.id}
-                    className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500 cursor-pointer"
-                  >
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        checked={isChecked(1, "equipment_ids", equipment.id)}
-                        onChange={() =>
-                          handleCheckboxChange(1, "equipment_ids", equipment.id)
-                        }
-                      />
-                      {equipment.name}
-                    </label>
-                  </li>
+                  <Grid item key={equipment.id} xs={12} sm={6} md={3}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={isChecked(1, "equipment_ids", equipment.id)}
+                          onChange={() =>
+                            handleCheckboxChange(1, "equipment_ids", equipment.id)
+                          }
+                        />
+                      }
+                      label={equipment.name}
+                    />
+                  </Grid>
                 ))}
-              </ul>
-            </label>
-          </div>
-          <div className="mt-6 flex w-[50%] justify-between">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
-            >
-              Previous
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-500"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Box display="flex" justifyContent="space-between">
+                <Button variant="contained" onClick={handlePrev}>
+                  Previous
+                </Button>
+                <Button type="submit" variant="contained" color="success">
+                  Submit
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Paper>
       )}
     </form>
   );

@@ -97,7 +97,7 @@ const MissionCommand = () => {
           id: element.id,
           lng: parseFloat(element.longitude),
           lat: parseFloat(element.latitude),
-          icon: `http://localhost:8000/icons/${element.team.symbol.icon}`,
+          icon: `http://api.codett.ng/icons/${element.team.symbol.icon}`,
           title: element.team.symbol.title,
           description: element.team.symbol.description
         });

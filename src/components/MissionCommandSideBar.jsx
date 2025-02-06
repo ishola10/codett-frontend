@@ -116,7 +116,7 @@ const MissionCommandSideBar = ({...props}) => {
                 <Card sx={{ background: 'transparent'}}>
                   <img
                     id={icon.id}
-                    src={`http://localhost:8000/icons/${icon.icon}`}
+                    src={`http://api.codett.ng/icons/${icon.icon}`}
                     alt={icon.title}
                     width={92}
                     height={92}
