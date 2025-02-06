@@ -120,7 +120,8 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
-  // Handle drop event (convert screen coordinates to LatLng)
+
+ // Handle drop event (convert screen coordinates to LatLng)
   const onDrop = (event, dragType = 1) => {
     event.preventDefault();
     const iconUrl = event.dataTransfer.getData("iconUrl");
@@ -129,6 +130,7 @@ const MissionCommand = () => {
     console.log(`Icon id: ${iconId}`);
     updateMission(iconId);
   };
+
 
   // Prevent default behavior on drag over
   const onDragOver = (event) => {
