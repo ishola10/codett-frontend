@@ -10,6 +10,8 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import CachedIcon from '@mui/icons-material/Cached';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation';
+import SatelliteAltIcon from '@mui/icons-material/SatelliteAlt';
 
 const MissionMapBottomBar = (props) => {
   const [value, setValue] = React.useState(0);
@@ -20,7 +22,7 @@ const MissionMapBottomBar = (props) => {
       left: 0,
       right: 0,
       zIndex: 1,
-      width: '600px',
+      width: '640px',
       mx: 'auto',
       marginBottom: '20px'
     }}>
@@ -32,7 +34,8 @@ const MissionMapBottomBar = (props) => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMapTypeChange} label="Sattelite" icon={<LocationOnIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={props.handleMapTypeChange} label="Sattelite" icon={<SatelliteAltIcon />} />
+        <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(1)} label="Mission" icon={<ThreeDRotationIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(1)} label="Mission" icon={<LocationOnIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(2)} label="Objectives" icon={<MilitaryTechIcon />} />
         <BottomNavigationAction sx={{color: '#ffffff'}} onClick={() => props.handleSideBarDisplay(3)} label="Command" icon={<LocalPoliceIcon />} />

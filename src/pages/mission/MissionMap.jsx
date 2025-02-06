@@ -1,43 +1,89 @@
-import React, { useState, useEffect } from "react";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Container from '@mui/material/Container';
-import { Link } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useState, useEffect, useRef, forwardRef, useCallback} from "react";
+import { useLocation } from 'react-router-dom'; 
 import MissionMapSideBar from "../../components/MissionMapSideBar";
+import MissionCommandSideBar from "../../components/MissionCommandSideBar";
+import MissionObjectiveSideBar from "../../components/MissionObjectiveSideBar";
 import MissionMapBottomBar from "../../components/MissionMapBottomBar";
-import { getMission } from "../../services/appConfig";
-import { useSearchParams } from 'react-router-dom';
+import MissionMapTimer from "../../components/MissionMapTimer";
+import MissionMapPointer from "../../components/MissionMapPointer";
+import { getMission, updateMissionParticipant, updateMissionParticipantPosition } from "../../services/appConfig";
+// import { useSearchParams } from 'react-router-dom';
 import FullPageLoader from "../../components/FullPageLoader";
 import Typography from '@mui/material/Typography';
-import {APIProvider, Map, AdvancedMarker, Pin, InfoWindow, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import Box from '@mui/material/Box';
+import {APIProvider, Map, AdvancedMarker, InfoWindow, useAdvancedMarkerRef, useApiIsLoaded} from '@vis.gl/react-google-maps';
+import { duration } from "@mui/material";
 
 const MissionMap = () => {
+  const ASSET_URL = process.env.ASSET_URL;
+
+  const apiIsLoaded = useApiIsLoaded();
+
+  const [map, setMap] = useState(null);
   const [mission, setMission] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [markers, setMarkers] = useState([]);
-
-  const navigate = useNavigate();
+  const [infowindowOpen, setInfowindowOpen] = useState(false);
+  const [info, setInfo] = useState(null);
+  
+  // const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search); 
   const missionId = queryParams.get('mission_id');
 
+  const [markerRef, marker] = useAdvancedMarkerRef();
   const [mapType, setMapType] = useState('terrain'); 
 
-  const handleMapTypeChange = () => {
-    setMapType(mapType === 'terrain' ? 'satellite' : 'terrain'); 
+  const [toggleCommand, setToggleCommand] = useState(false);
+  const [displaySidebar, setDisplaySidebar] = useState(3);
+
+  const [mousePosition, setMousePosition] = useState({lat: 0, lng: 0});
+
+  const libraries = ['places'];
+
+  const [zoomLevel, setZoomLevel] = useState(10);
+  const zoomInterval = useRef(null);
+  const mapRef = useRef();
+
+  // Capture the map instance
+  const onMapLoad = useCallback((mapInstance) => {
+    setMap(mapInstance);
+    mapRef.current = mapInstance;
+  }, []);
+
+  const handleMarkerDragStart = (marker, map) => {
+    console.log(map);
   };
 
-  const mapContainerStyle: React.CSSProperties = {
-    width: "100%",
-    height: "100vh",
+  const handleMarkerDragEnd = (event, currentMarker) => {
+    
+    const newLng = event.latLng.lng();
+    const newLat = event.latLng.lat();
+    const participantId = currentMarker.id;
+
+    updateMissionParticipants(participantId, newLng, newLat, missionId);
+    
+  };
+
+  const updateMissionParticipants = async (participantId, newLng, newLat, missionId) => {
+    const query = {
+      participant_id: participantId,
+      lat: newLat,
+      lng: newLng,
+      mission_id: missionId
+    }
+
+    const response = await updateMissionParticipantPosition(missionId, query);
+    if (response && response.data !== null) {
+      getMissionById(missionId);
+    } else {
+      setMission(null);
+      setIsLoading(false);
+    }
+  }
+
+  const handleMapTypeChange = () => {
+    setMapType(mapType === 'terrain' ? 'hybrid' : 'terrain'); 
   };
 
   const getMissionById = async (missionId) => {
@@ -46,32 +92,20 @@ const MissionMap = () => {
       setIsLoading(false);
       setMission(response.data);
 
-      // Set objectives marker
-      let objectiveMarker = {
-        lng: parseFloat(response.data.objectives[0].longitude),
-        lat: parseFloat(response.data.objectives[0].latitude),
-        icon: `http://localhost:8000/icons/${response.data.objectives[0].symbol.icon}`,
-        title: response.data.objectives[0].description
-      }
+      const initMarkers = [];
 
-      // Set friendly marker
-      let friendlyMarker = {
-        lng: parseFloat(response.data.participants[0].team.longitude),
-        lat: parseFloat(response.data.participants[0].team.latitude),
-        icon: `http://localhost:8000/icons/${response.data.participants[0].team.symbol.icon}`,
-        title: response.data.participants[0].team.name
-      }
+      response.data.participants.forEach(function(element, index) {
+        initMarkers.push({
+          id: element.id,
+          lng: parseFloat(element.longitude),
+          lat: parseFloat(element.latitude),
+          icon: `http://localhost:8000/icons/${element.team.symbol.icon}`,
+          title: element.team.symbol.title,
+          description: element.team.symbol.description
+        });
+      });
 
-      // Set hostile marker
-      // let hostileMarker = {
-      //   lng: parseFloat(response.data.participants[1].team.longitude),
-      //   lat: parseFloat(response.data.participants[1].team.latitude)
-      // }
-
-      // console.log(`http://localhost:8000/icons/${response.data.objectives[0].symbol.icon}`);
-
-      handleAddMarker(objectiveMarker);
-      // handleAddMarker(friendlyMarker);
+      setMarkers(initMarkers);
 
     } else {
       setMission(null);
@@ -79,24 +113,92 @@ const MissionMap = () => {
     }
   }
 
-  const handleAddMarker = (marker) => {
-    // Add the new marker to the existing markers array
-    setMarkers([...markers, marker]); 
+  const handleViewMarkerInfo = (marker) => {
+    setInfo(marker);
+    setInfowindowOpen(true);
+  }
+
+  const handleCloseMarkerInfo = (marker) => {
+    setInfowindowOpen((prevInfowindowOpen) => false);
+  }
+
+  // Handle drop event (convert screen coordinates to LatLng)
+  const onDrop = (event, dragType = 1) => {
+    event.preventDefault();
+    const iconUrl = event.dataTransfer.getData("iconUrl");
+    const iconId = event.dataTransfer.getData("iconId");
+    console.log(`Droping image url: ${iconUrl}`);
+    console.log(`Icon id: ${iconId}`);
+    updateMission(iconId);
   };
 
+  // Prevent default behavior on drag over
+  const onDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseMovement = (event) => {
+    setMousePosition({
+      lat: event.detail.latLng.lat,
+      lng: event.detail.latLng.lng
+    });
+  }
+
+  const updateMission = async (symbolId) => {
+    const query = {
+      symbol_id: symbolId,
+      lat: mousePosition.lat,
+      lng: mousePosition.lng,
+      mission_id: missionId
+    }
+
+    const response = await updateMissionParticipant(missionId, query);
+    if (response && response.data !== null) {
+      getMissionById(missionId);
+    } else {
+      setMission(null);
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
+    
     getMissionById(missionId);
-  }, []);
+
+    if (!apiIsLoaded) return; 
+
+    if (apiIsLoaded) {
+      zoomInterval.current = setInterval(() => {
+        setZoomLevel((prevZoom) =>
+          prevZoom >= 18 ? 10 : prevZoom + 1 
+        );
+      }, 15000); // Zoom every 15 seconds
+    }
+
+    return () => {
+      clearInterval(zoomInterval.current); 
+    };
+
+  }, [isLoading, apiIsLoaded]);
 
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>
       <FullPageLoader isLoading={isLoading} />
-      <MissionMapBottomBar handleMapTypeChange={handleMapTypeChange} />
-      {
-        mission !== null ?
-          <APIProvider apiKey={'AIzaSyCvCuQI3Se4e4r2q4SbEEHEr-OgOMDrRQw'}>
+
+      {mission && <MissionMapTimer duration={40} />}
+      {mission && <MissionMapPointer {...mousePosition} />}
+
+      <MissionMapBottomBar 
+        handleMapTypeChange={handleMapTypeChange} 
+        handleSideBarDisplay={setDisplaySidebar}
+      />
+      {mission && mission !== null ? 
+        <APIProvider apiKey={'AIzaSyCvCuQI3Se4e4r2q4SbEEHEr-OgOMDrRQw'}>
+          <Box onDragOver={onDragOver} onDrop={onDrop}>
             <Map
               mapId={'7084e23d1e426c'}
+              onLoad={onMapLoad}
+              onMouseout={handleMouseMovement}
               mapTypeId={mapType}
               style={{width: '100vw', height: '100vh'}}
               defaultCenter={{
@@ -104,26 +206,59 @@ const MissionMap = () => {
                 lng: parseFloat(mission.region.longitude)
               }}
               options={{
-                streetViewControl: true, // Optional: Hide Street View control
-                fullscreenControl: true, // Optional: Hide fullscreen control
+                streetViewControl: true, 
+                fullscreenControl: true, 
+                tilt: 45, // Enables 3D tilt view
+                heading: 0, // Adjust camera direction (0 = North)
+                zoomControl: true,
+                mapTypeControl: true,
+                disableDefaultUI: false, // Show controls
               }}
               defaultZoom={10}
+              zoom={zoomLevel}
               gestureHandling={'greedy'}
-              disableDefaultUI={true}>
+              disableDefaultUI={true}
+              >
 
               {markers.map((marker, index) => (
-                <AdvancedMarker title={marker.title} key={index} position={{
-                  lat: marker.lat,
-                  lng: marker.lng
-                }}>
-                  <img src={marker.icon} width={32} height={32} />
+                <AdvancedMarker 
+                  key={marker.id}
+                  onClick={() => handleViewMarkerInfo(marker)}
+                  draggable 
+                  onDragStart={(event) => handleMarkerDragStart(marker, event.map)} 
+                  onDrag={(e) => {
+                    console.log(`lat: `+e.latLng.lat());
+                    console.log(`lng: `+e.latLng.lng());
+                  }}
+                  onDragEnd={(e) => handleMarkerDragEnd(e, marker)} 
+                  title={marker.title} 
+                  ref={markerRef} 
+                  position={{
+                    lat: marker.lat,
+                    lng: marker.lng
+                  }}
+                  >
+                  <img src={marker.icon} width={64} height={64} alt={marker.title} />
                 </AdvancedMarker>
               ))}
+
+              {info && (
+                <InfoWindow
+                  position={{
+                    lat: info.lat,
+                    lng: info.lng
+                  }}
+                  maxWidth={120}
+                  onCloseClick={() => handleCloseMarkerInfo(marker)}>
+                  
+                  <Typography sx={{ fontSize: '12px' }}>{info.description}</Typography>
+                  
+                </InfoWindow>
+              )}
             </Map>
-          </APIProvider>
-        : <Typography varaint="body2">
-          Loading....
-        </Typography>
+          </Box>
+        </APIProvider>
+        : <Typography varaint="body2">Loading....</Typography>
       }
     </div>
   );
