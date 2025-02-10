@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 const MissionObjectiveSideBar = ({...props}) => {
 
-  const {objectives, participants, scores, user, region, status, weather, condition, missionType} = props;
+  // const {objectives, participants, scores, user, region, status, weather, condition, missionType} = props;
 
   return (
     <Box 
