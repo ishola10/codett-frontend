@@ -4,20 +4,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { getIcons } from "../services/appConfig";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
+// import { styled } from "@mui/material/styles";
+// import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import TextField from '@mui/material/TextField';
 
-const Item = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+// const Item = styled(Paper)(({ theme }) => ({
+//   padding: theme.spacing(1),
+//   textAlign: "center",
+//   color: theme.palette.text.secondary,
+// }));
 
 const MissionCommandSideBar = ({...props}) => {
-  const {objectives, participants, scores, user, region, status, weather, condition, missionType} = props;
+  // const {objectives, participants, scores, user, region, status, weather, condition, missionType} = props;
   const [icons, setIcons] = useState([]);
 
   const handleSearch = () => {
@@ -103,7 +103,7 @@ const MissionCommandSideBar = ({...props}) => {
             container
             spacing={2}
             columns={{ xs: 2, sm: 6, md: 12 }}
-             sx={{ height: '200px', overflowY: 'auto', height: '100vh', '&::-webkit-scrollbar': {
+             sx={{  overflowY: 'auto', height: '100vh', '&::-webkit-scrollbar': {
               width: '8px', 
             },
             '&::-webkit-scrollbar-thumb': {
