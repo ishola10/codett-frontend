@@ -20,7 +20,7 @@ import ResourceManagementSettings from "../../../components/setup-simulation-com
 const SetupSimulation = () => {
   const navigate = useNavigate();
   // const [activeSection, setActiveSection] = useState(null);
-  const [visibleSection, setVisibleSection] = useState(null);
+  const [visibleSection] = useState(null);
   // const [activeMission, setActiveMission] = useState(null);
   // const [visibleMission, setVisibleMission] = useState(null);
   // const [activeSimultion, setActiveSimultion] = useState(null);
