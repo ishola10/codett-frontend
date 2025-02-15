@@ -80,6 +80,11 @@ export const getMission = async (id: any) => {
   return response.data;
 };
 
+export const getMissionLogs = async (id: any) => {
+  const response = await axios.get(`${BASE_URL}/mission-logs?mission_id=${id}`);
+  return response.data;
+};
+
 export const updateMissionParticipant = async (id: any, query: any) => {
   const response = await axios.post(`${BASE_URL}/mission/add-participants?mission_id=${id}`, query);
   return response.data;

@@ -6,7 +6,7 @@ import MissionObjectiveSideBar from "../../components/MissionObjectiveSideBar";
 import MissionMapBottomBar from "../../components/MissionMapBottomBar";
 import MissionMapTimer from "../../components/MissionMapTimer";
 import MissionMapPointer from "../../components/MissionMapPointer";
-import { getMission, updateMissionParticipant, updateMissionParticipantPosition } from "../../services/appConfig";
+import { getMission, updateMissionParticipant, updateMissionParticipantPosition, getMissionLogs } from "../../services/appConfig";
 // import { useSearchParams } from 'react-router-dom';
 import FullPageLoader from "../../components/FullPageLoader";
 import Typography from '@mui/material/Typography';
@@ -25,6 +25,7 @@ const MissionCommand = () => {
   const [markers, setMarkers] = useState([]);
   const [infowindowOpen, setInfowindowOpen] = useState(false);
   const [info, setInfo] = useState(null);
+  const [missionLog, setMissionLog] = useState(null);
   
   // const navigate = useNavigate();
   const location = useLocation();
@@ -111,6 +112,17 @@ const MissionCommand = () => {
     }
   }
 
+  const getMissionLogById = async (missionId) => {
+    const response = await getMissionLogs(missionId);
+    if (response && response.data !== null) {
+      setIsLoading(false);
+      setMissionLog(response.data);
+    } else {
+      setMissionLog(null);
+      setIsLoading(false);
+    }
+  }
+
   const handleViewMarkerInfo = (marker) => {
     setInfo(marker);
     setInfowindowOpen(true);
@@ -120,8 +132,7 @@ const MissionCommand = () => {
     setInfowindowOpen((prevInfowindowOpen) => false);
   }
 
-
- // Handle drop event (convert screen coordinates to LatLng)
+  // Handle drop event (convert screen coordinates to LatLng)
   const onDrop = (event, dragType = 1) => {
     event.preventDefault();
     const iconUrl = event.dataTransfer.getData("iconUrl");
@@ -130,7 +141,6 @@ const MissionCommand = () => {
     console.log(`Icon id: ${iconId}`);
     updateMission(iconId);
   };
-
 
   // Prevent default behavior on drag over
   const onDragOver = (event) => {
@@ -164,15 +174,17 @@ const MissionCommand = () => {
   useEffect(() => {
     
     getMissionById(missionId);
+    getMissionLogById(missionId);
 
     if (!apiIsLoaded) return;  
+
   }, [isLoading, apiIsLoaded]);
 
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>
       <FullPageLoader isLoading={isLoading} />
 
-      {displaySidebar === 1 && <MissionMapSideBar {...mission} />}
+      {displaySidebar === 1 && <MissionMapSideBar {...mission} missionLog={missionLog} />}
       {displaySidebar === 2 && <MissionObjectiveSideBar {...mission} />}
       {displaySidebar === 3 && <MissionCommandSideBar {...mission} />}
 
