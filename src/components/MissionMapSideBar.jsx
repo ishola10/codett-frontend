@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,8 +9,8 @@ const RightSidebar = ({ ...props }) => {
   const {
     objectives,
     participants,
-    scores,
-    user,
+    // scores,
+    // user,
     region,
     status,
     weather,
@@ -52,7 +52,7 @@ const RightSidebar = ({ ...props }) => {
             sx={{
               height: 150,
               border: "1px solid #ccc",
-              borderRadius: "4px",
+              // borderRadius: "4px",
               backgroundColor: "rgba(0, 0, 0, 0.85)",
               color: "#FFF",
               borderRadius: "12px",
@@ -95,7 +95,7 @@ const RightSidebar = ({ ...props }) => {
             sx={{
               height: 220,
               border: "1px solid #ccc",
-              borderRadius: "4px",
+              // borderRadius: "4px",
               backgroundColor: "rgba(0, 0, 0, 0.85)",
               color: "#FFF",
               borderRadius: "12px",
@@ -138,7 +138,7 @@ const RightSidebar = ({ ...props }) => {
             sx={{
               height: 250,
               border: "1px solid #ccc",
-              borderRadius: "4px",
+              // borderRadius: "4px",
               backgroundColor: "rgba(0, 0, 0, 0.85)",
               color: "#FFF",
               borderRadius: "12px",

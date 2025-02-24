@@ -40,11 +40,11 @@ const Battlespace = () => {
   ];
 
   const handleLocationClick = () => {
-    navigate("/setup-simulation");
+    navigate("/mission-form");
   };
 
   const handleRandomClick = () => {
-    navigate("/setup-simulation");
+    navigate("/mission-form");
   };
 
   return (

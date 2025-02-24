@@ -27,6 +27,7 @@ import MissionForm from './components/MissionForm';
 import GetMission from './components/GetMission';
 import MissionCommand from './pages/mission/MissionCommand';
 import MissionMap from './pages/mission/MissionMap';
+import MissionCompleted from './pages/mission/MissionCompleted';
 
 
 const App: React.FC = () => {
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Route path="/get-mission" element={<GetMission />} />
           <Route path="/mission-command" element={<MissionCommand />} />
           <Route path="/mission-map" element={<MissionMap />} />
+          <Route path="/mission-completed" element={<MissionCompleted />} />
         </Routes>
       </div>
     </Router>

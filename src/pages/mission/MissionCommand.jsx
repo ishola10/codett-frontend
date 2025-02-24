@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, useCallback} from "react";
+import React, { useState, useEffect, useRef, useCallback} from "react";
 import { useLocation } from 'react-router-dom'; 
 import MissionMapSideBar from "../../components/MissionMapSideBar";
 import MissionCommandSideBar from "../../components/MissionCommandSideBar";
@@ -12,10 +12,10 @@ import FullPageLoader from "../../components/FullPageLoader";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {APIProvider, Map, AdvancedMarker, InfoWindow, useAdvancedMarkerRef, useApiIsLoaded} from '@vis.gl/react-google-maps';
-import { duration } from "@mui/material";
+// import { duration } from "@mui/material";
 
 const MissionCommand = () => {
-  const ASSET_URL = process.env.ASSET_URL;
+  // const ASSET_URL = process.env.ASSET_URL;
 
   const apiIsLoaded = useApiIsLoaded();
 
@@ -98,7 +98,7 @@ const MissionCommand = () => {
           id: element.id,
           lng: parseFloat(element.longitude),
           lat: parseFloat(element.latitude),
-          icon: `http://localhost:8000/icons/${element.team.symbol.icon}`,
+          icon: `http://api.codett.ng/icons/${element.team.symbol.icon}`,
           title: element.team.symbol.title,
           description: element.team.symbol.description
         });
