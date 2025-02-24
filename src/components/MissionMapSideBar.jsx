@@ -12,10 +12,11 @@ const RightSidebar = ({ ...props }) => {
     // scores,
     // user,
     region,
-    // status,
-    // weather,
-    // condition,
-    // missionType,
+    status,
+    weather,
+    condition,
+    missionType,
+    missionLog
   } = props;
   
   return (
@@ -41,11 +42,10 @@ const RightSidebar = ({ ...props }) => {
         }}
       >
         <CardContent>
-          <Typography variant="p" component="div">
+          <Typography>
             Control Panel
           </Typography>
-
-          <hr />
+          <br />
 
           <Card
             key="1"
@@ -101,7 +101,13 @@ const RightSidebar = ({ ...props }) => {
               borderRadius: "12px",
             }}
           >
-            <CardContent>
+            <CardContent sx={{ height: '220px', overflowY: 'auto', '&::-webkit-scrollbar': {
+              width: '8px', 
+            },
+            '&::-webkit-scrollbar-thumb': {
+              borderRadius: '8px', 
+              backgroundColor: 'rgba(255, 255, 255, 0.90)', 
+            }}}>
               <Typography variant="body2" sx={{ marginBottom: "6px" }}>
                 Units / Forces (Tactical Team)
               </Typography>
@@ -130,7 +136,7 @@ const RightSidebar = ({ ...props }) => {
           <Card
             key="3"
             sx={{
-              height: 150,
+              height: 250,
               border: "1px solid #ccc",
               // borderRadius: "4px",
               backgroundColor: "rgba(0, 0, 0, 0.85)",
@@ -138,12 +144,21 @@ const RightSidebar = ({ ...props }) => {
               borderRadius: "12px",
             }}
           >
-            <CardContent>
+            <CardContent sx={{ height: '250px', overflowY: 'auto', '&::-webkit-scrollbar': {
+              width: '8px', 
+            },
+            '&::-webkit-scrollbar-thumb': {
+              borderRadius: '8px', 
+              backgroundColor: 'rgba(255, 255, 255, 0.90)', 
+            }}}>
               <Typography variant="body2">Mission Logs</Typography>
 
-              <Typography sx={{ fontSize: "12px" }}>
-                Not available at the moments
-              </Typography>
+              {missionLog && missionLog.map((el, index) => (
+                <Typography sx={{ fontSize: "12px", color: "#FFDC36", marginBottom: '6px' }}>
+                  {el.title} | {el.description}
+                </Typography>
+              ))}
+              
             </CardContent>
           </Card>
         </CardContent>
