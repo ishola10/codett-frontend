@@ -179,7 +179,7 @@ const MissionMap = () => {
       clearInterval(zoomInterval.current); 
     };
 
-  }, [isLoading, apiIsLoaded]);
+  }, [isLoading, apiIsLoaded, missionId]);
 
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>

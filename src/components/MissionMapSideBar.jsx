@@ -12,10 +12,10 @@ const RightSidebar = ({ ...props }) => {
     // scores,
     // user,
     region,
-    status,
-    weather,
-    condition,
-    missionType,
+    // status,
+    // weather,
+    // condition,
+    // missionType,
     missionLog
   } = props;
   

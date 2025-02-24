@@ -35,12 +35,12 @@ const MissionCommand = () => {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [mapType, setMapType] = useState('terrain'); 
 
-  const [toggleCommand, setToggleCommand] = useState(false);
+  // const [toggleCommand, setToggleCommand] = useState(false);
   const [displaySidebar, setDisplaySidebar] = useState(3);
 
   const [mousePosition, setMousePosition] = useState({lat: 0, lng: 0});
 
-  const libraries = ['places'];
+  // const libraries = ['places'];
 
   const mapRef = useRef();
 
@@ -178,7 +178,7 @@ const MissionCommand = () => {
 
     if (!apiIsLoaded) return;  
 
-  }, [isLoading, apiIsLoaded]);
+  }, [isLoading, apiIsLoaded, missionId]);
 
   return (
     <div sx={{ py: 0, backgroundColor: "#000" }}>
