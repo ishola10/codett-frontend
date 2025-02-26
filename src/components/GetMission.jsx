@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import { Link } from '@mui/material';
+import bgImage from "./images/bg.png"
 // import { useNavigate } from 'react-router-dom'; 
 
 
@@ -49,7 +50,8 @@ const GetMission = () => {
 
 
   return (
-    <Container sx={{ py: 4 }}>
+    <div className="bg" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh' }}>
+      <Container sx={{ py: 4 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -85,6 +87,7 @@ const GetMission = () => {
         </Table>
       </TableContainer>
     </Container>
+    </div>
   );
 };
 
