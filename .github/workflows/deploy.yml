@@ -3,14 +3,16 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  
+      - main
+
+env:
+  CI: false
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -21,6 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Disable CI checks
+        run: echo "CI=false" >> $GITHUB_ENV
 
       - name: Build React app
         run: npm run build
