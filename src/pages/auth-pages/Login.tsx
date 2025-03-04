@@ -14,10 +14,13 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(API_ROUTES.LOGIN, { username, password });
-      const { token, user } = response.data;
+      const { access_token, user } = response.data;
+      console.log(response.data);
 
-      localStorage.setItem("authToken", token);
+      localStorage.setItem("token", access_token);
       localStorage.setItem("user", JSON.stringify(user));
+
+      console.log("token", access_token);
 
       navigate("/dashboard");
     } catch (error) {

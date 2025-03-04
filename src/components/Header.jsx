@@ -10,7 +10,7 @@ const Header = () => {
     { label: "DASHBOARD", path: "/dashboard" },
     { label: "SIMULATION", path: "/simulation" },
     { label: "EQUIPMENT", path: "/equipment" },
-    { label: "MISSIONS", path: "/missions" },
+    { label: "MISSIONS", path: "/get-mission" },
   ];
   
   useEffect(() => {

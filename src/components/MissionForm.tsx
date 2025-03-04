@@ -8,6 +8,7 @@ import {
   getRegions,
   getEquipments,
   getWeapons,
+  createMission,
 } from "../services/appConfig";
 import {
   TextField,
@@ -224,8 +225,24 @@ const MissionForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    Navigate("/get-mission");
-    console.log(formData);
+    console.log("Form data before sending:", formData);
+
+    createMission(formData)
+      .then((response: { status: boolean; message: string }) => {
+        if (response?.status) {
+          console.log("Mission created successfully:", response.message);
+          Navigate("/get-mission");
+        } else {
+          console.error("Unexpected API response:", response);
+        }
+      })
+      .catch((error) => {
+        console.error("Error creating mission:", error);
+      });
+
+    // e.preventDefault();
+    // Navigate("/get-mission");
+    // console.log(formData);
   };
 
   const handleCheckboxChange = (
@@ -539,7 +556,10 @@ const MissionForm: React.FC = () => {
       )}
 
       {currentStep === 2 && (
-        <Paper elevation={3} sx={{ p: 4, bgcolor: "black", color: "white", padding: "7% 2%" }}>
+        <Paper
+          elevation={3}
+          sx={{ p: 4, bgcolor: "black", color: "white", padding: "7% 2%" }}
+        >
           <Typography variant="h4" gutterBottom>
             Team 1 Details
           </Typography>
@@ -658,7 +678,10 @@ const MissionForm: React.FC = () => {
       )}
 
       {currentStep === 3 && (
-        <Paper elevation={3} sx={{ p: 4, bgcolor: "black", color: "white", padding: "7% 2%" }}>
+        <Paper
+          elevation={3}
+          sx={{ p: 4, bgcolor: "black", color: "white", padding: "7% 2%" }}
+        >
           <Typography variant="h4" gutterBottom>
             Team 2 Details
           </Typography>
