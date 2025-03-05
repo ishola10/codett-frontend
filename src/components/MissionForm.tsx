@@ -21,6 +21,7 @@ import {
   Menu,
   MenuItem,
   Box,
+  CircularProgress, // Import CircularProgress for the spinner
 } from "@mui/material";
 
 const MissionForm: React.FC = () => {
@@ -28,23 +29,18 @@ const MissionForm: React.FC = () => {
   const [weatherConditions, setWeatherConditions] = useState<
     { id: number; name: string; description: string }[]
   >([]);
-
   const [conditions, setConditions] = useState<
     { id: number; name: string; description: string }[]
   >([]);
-
   const [regions, setRegions] = useState<
     { id: number; state: string; description: string }[]
   >([]);
-
   const [equipments, setEquipments] = useState<
     { id: number; name: string; description: string }[]
   >([]);
-
   const [weapons, setWeapons] = useState<
     { id: number; name: string; description: string }[]
   >([]);
-
   const [anchorElWeather, setAnchorElWeather] = useState<null | HTMLElement>(
     null
   );
@@ -53,6 +49,7 @@ const MissionForm: React.FC = () => {
   const [anchorElRegion, setAnchorElRegion] = useState<null | HTMLElement>(
     null
   );
+  const [isLoading, setIsLoading] = useState(false); // State for loading spinner
 
   const handleClickDropdown = (
     event: React.MouseEvent<HTMLElement>,
@@ -223,26 +220,23 @@ const MissionForm: React.FC = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form data before sending:", formData);
+    setIsLoading(true); // Show spinner
 
-    createMission(formData)
-      .then((response: { status: boolean; message: string }) => {
-        if (response?.status) {
-          console.log("Mission created successfully:", response.message);
-          Navigate("/get-mission");
-        } else {
-          console.error("Unexpected API response:", response);
-        }
-      })
-      .catch((error) => {
-        console.error("Error creating mission:", error);
-      });
-
-    // e.preventDefault();
-    // Navigate("/get-mission");
-    // console.log(formData);
+    try {
+      const response = await createMission(formData);
+      if (response?.status) {
+        console.log("Mission created successfully:", response.message);
+        Navigate("/get-mission"); // Navigate after successful submission
+      } else {
+        console.error("Unexpected API response:", response);
+      }
+    } catch (error) {
+      console.error("Error creating mission:", error);
+    } finally {
+      setIsLoading(false); // Hide spinner
+    }
   };
 
   const handleCheckboxChange = (
@@ -555,7 +549,8 @@ const MissionForm: React.FC = () => {
         </Paper>
       )}
 
-      {currentStep === 2 && (
+
+{currentStep === 2 && (
         <Paper
           elevation={3}
           sx={{ p: 4, bgcolor: "black", color: "white", padding: "7% 2%" }}
@@ -677,6 +672,7 @@ const MissionForm: React.FC = () => {
         </Paper>
       )}
 
+
       {currentStep === 3 && (
         <Paper
           elevation={3}
@@ -686,7 +682,7 @@ const MissionForm: React.FC = () => {
             Team 2 Details
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Team Name"
@@ -785,13 +781,23 @@ const MissionForm: React.FC = () => {
                 ))}
               </Grid>
             </Grid>
+
             <Grid item xs={12}>
               <Box display="flex" justifyContent="left" gap={2}>
                 <Button variant="contained" onClick={handlePrev}>
                   Previous
                 </Button>
-                <Button type="submit" variant="contained" color="success">
-                  Submit
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="success"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <CircularProgress size={24} sx={{ color: 'white' }} /> 
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Box>
             </Grid>

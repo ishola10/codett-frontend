@@ -50,7 +50,7 @@ const GetMission = () => {
 
 
   return (
-    <div className="bg" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh' }}>
+    <div className="bg" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', }}>
       <Container sx={{ py: 4 }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
